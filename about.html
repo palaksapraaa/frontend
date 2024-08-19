@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About User</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header img.logo {
+            width: 120px;
+        }
+        
+        .main-content {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #007bff;
+            margin-top: 0;
+        }
+        
+        h2 {
+            color: #007bff;
+            margin-top: 20px;
+            font-size: 1.5rem;
+        }
+        
+        p {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .user-info {
+            margin-bottom: 20px;
+        }
+        
+        .dashboard-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-align: center;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .dashboard-button:hover {
+            background-color: #0056b3;
+        }
+
+        .footer {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://imgs.search.brave.com/dsRxX9MNxgZMT4qHcqsl6IqedqonJa9yA2Ds1s3Brl8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by9hdmF0YXItcmVz/b3VyY2luZy1jb21w/YW55XzEyNTQ5Njct/NjY1My5qcGc_c2l6/ZT02MjYmZXh0PWpw/Zw" alt="Logo" class="logo">
+        <h1>About User</h1>
+    </div>
+
+    <div class="main-content">
+        <h2>User Information</h2>
+        <div class="user-info" id="userInfo">
+            <p><strong>Username:</strong> <span id="usernameDisplay"></span></p>
+            <p><strong>Email:</strong> <span id="emailDisplay"></span></p>
+            <p><strong>Role:</strong> <span id="roleDisplay"></span></p>
+            <p><strong>Logins Today:</strong> <span id="loginCountDisplay"></span></p>
+        </div>
+        <a href="dashboard.html" class="dashboard-button">Go to Dashboard</a>
+    </div>
+
+    <div class="footer">
+        <!-- Optional footer content can be added here -->
+    </div>
+
+    <script>
+        // JavaScript to Display User Info and Login Count
+        document.addEventListener('DOMContentLoaded', function() {
+            const username = localStorage.getItem('username');
+            const email = localStorage.getItem('email');
+            const userRole = localStorage.getItem('role') || 'User';
+
+            document.getElementById('usernameDisplay').textContent = username || 'Unknown';
+            document.getElementById('emailDisplay').textContent = email || 'Unknown';
+            document.getElementById('roleDisplay').textContent = userRole;
+
+            // Function to calculate logins today
+            function calculateLogins() {
+                const logins = JSON.parse(localStorage.getItem('loginHistory')) || [];
+                const now = new Date();
+                const startOfToday = new Date(now.setHours(0, 0, 0, 0));
+                const todayLogins = logins.filter(login => new Date(login) >= startOfToday);
+
+                return todayLogins.length;
+            }
+
+            // Display the number of logins today
+            const loginCount = calculateLogins();
+            document.getElementById('loginCountDisplay').textContent = loginCount;
+        });
+    </script>
+</body>
+</html>
